@@ -10,29 +10,27 @@ import java.io.IOException;
 public class RequestReader {
 
 
-    public Dot readRequest(HttpServletRequest request) {
-        Gson gson = new Gson();
-        StringBuilder jsonStringBuilder = new StringBuilder();
-        String line;
+    public Dot readRequest(HttpServletRequest request) throws Exception {
+        try {
+            System.out.println(request.getParameter("x"));
+            System.out.println(request.getParameter("y"));
+            System.out.println(request.getParameter("r"));
 
-        try (BufferedReader reader = request.getReader()) {
-            // Чтение тела запроса построчно
-            while ((line = reader.readLine()) != null) {
-                jsonStringBuilder.append(line);
-            }
 
-            // Преобразуем строку JSON в объект User
-            return gson.fromJson(jsonStringBuilder.toString(), Dot.class);
-
-        } catch (IOException e) {
+            Integer x = Integer.parseInt(request.getParameter("x"));
+            Double y = Double.parseDouble(request.getParameter("y"));
+            Integer r = Integer.parseInt(request.getParameter("r"));
+            System.out.printf("x : %f, y : %f, r : %d", x, y, r);
+            return new Dot(x, y, r);
+        } catch (NumberFormatException e) {
             e.printStackTrace();
         }
 
+
         return null;
     }
-
-
 }
+
 
 
 

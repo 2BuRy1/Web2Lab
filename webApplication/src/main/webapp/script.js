@@ -37,30 +37,30 @@ async function submit() {
 
     drawDot(xValue, yHTML.value, rValue);
 
+    //
+    // const requestContent = {
+    //     method: "post",
+    //     headers: {
+    //         "Accept": "application/json",
+    //         "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify({x: xValue, y: yHTML.value, r: rValue})
+    //
+    // };
 
     const requestContent = {
-        method: "post",
-
+        method: "get",
         headers: {
-            "content-type": "application/json",
+            "Accept": "application/json",
         },
+    }
 
-        body: JSON.stringify({
-            x: xValue,
-            y: yHTML.value,
-            r: rValue
-        })
-
-    };
+   const url = '/api';
 
 
-    const url = '/api';
-
-
-    fetch(url, requestContent).then(response => response.json())
+    fetch(`${url}?x=${xValue}&y=${yHTML.value}&r=${rValue}`, requestContent).then(response => response.json())
         .then(data => appendData(data)).catch(err => console.error(err));
-
-
+  // fetch('/api', requestContent).then(response => response.json()).then(data => appendData(data)).catch(err => console.error(err));
 }
 
 
@@ -125,14 +125,6 @@ function appendData(item) {
 
     item.status === true ? status.textContent = "Попадание" : status.textContent = "Промах";
     row.appendChild(status);
-
-    const CurrentTime = document.createElement("td");
-    CurrentTime.textContent = new Date().toLocaleTimeString();
-    row.appendChild(CurrentTime);
-
-    const SpentTime = document.createElement("td");
-    SpentTime.textContent = item.time;
-    row.appendChild(SpentTime);
 
     body.prepend(row);
     thead.classList.add('visible');

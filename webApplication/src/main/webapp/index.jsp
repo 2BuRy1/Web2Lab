@@ -150,13 +150,7 @@
             overflow: scroll;
         }
 
-        thead {
-            visibility: hidden;
-        }
 
-        thead.visible {
-            visibility: visible;
-        }
 
         td, th {
             opacity: 0;
@@ -292,24 +286,7 @@
 </main>
 <footer>
     <div class = 'tableContainer'>
-        <table id="table-sector">
-            <thead id="table-header">
-            <tr>
-                <th>x</th>
-                <th>y</th>
-                <th>R</th>
-                <th>status</th>
-                <th>Current time</th>
-                <th>Spent time</th>
-            </tr>
-            </thead>
-            <tbody id = "table_body">
-
-
-            </tbody>
-
-
-        </table>
+        <jsp:include page="result.jsp"></jsp:include>
     </div>
     <status class="status"></status>
 </footer>

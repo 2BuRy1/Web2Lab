@@ -23,6 +23,14 @@
     <servlet-name>AreaCheckServlet</servlet-name>
     <url-pattern>/check</url-pattern>
   </servlet-mapping>
+  <filter>
+    <filter-name>AccessFilter</filter-name>
+    <filter-class>AccessFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AccessFilter</filter-name>
+    <url-pattern>/check</url-pattern>
+  </filter-mapping>
 
 
 

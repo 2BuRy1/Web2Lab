@@ -31,7 +31,9 @@ public class Dot{
         return r;
     }
 
-
+    public boolean isStatus() {
+        return status;
+    }
 
     public void status(boolean inTheGraphic) {
         status = inTheGraphic;
