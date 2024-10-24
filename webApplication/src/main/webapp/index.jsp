@@ -25,6 +25,13 @@
 
         }
 
+        .xButtons{
+            border-radius: 5px;
+            height: 2em;
+            width: 3em;
+
+        }
+
         header {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -81,11 +88,13 @@
         }
 
         input, select, .variables, .canvasContainer, button{
-            transition: ease-in-out .2s;
+            transition: ease-in-out .5s;
+            accent-color: #FF1493;
         }
 
         input:hover, select:hover, button:hover{
-            filter: drop-shadow(0 0 2px red );
+            transition: ease-in-out 1s;
+            cursor: pointer;
         }
 
 
@@ -131,12 +140,10 @@
         }
 
         .form input {
-            font-size: 20px;
-            border: 0.5px solid black;
-            border-radius: 30px;
+            font-size: 15px;
+            margin: 5px;
+            padding: 5px 10px;
         }
-
-
 
         form > button {
             width: 100%;
@@ -186,12 +193,10 @@
 
         }
 
-        select {
-            border: 0.5px solid black;
-            border-radius: 10px;
-            height: 25px;
-            width: 100px;
-
+         #xSelection{
+             display: grid;
+             grid-template-columns: repeat(3, 1fr);
+             grid-template-rows: repeat(3, 1fr);
         }
 
         .variables:hover, .canvasContainer:hover{
@@ -250,30 +255,32 @@
         <div class="form" id="form" >
 
             <label for="xSelection">
-                <p>X</p><select id="xSelection">
-                <option value="-3">-3</option>
-                <option value="-2">-2</option>
-                <option value="-1">-1</option>
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
+                <p>X</p>
+                <div name = "xSelection" id="xSelection">
+                <input type="button" value="-2" class = "xButtons"></input>
+                <input type="button" value="-1.5" class = "xButtons"></input>
+                <input type="button" value="-1" class = "xButtons"></input>
+                <input type="button" value="-0,5" class = "xButtons"></input>
+                <input type="button" value="0" class = "xButtons"></input>
+                <input type="button" value="0.5" class = "xButtons"></input>
+                <input type="button" value="1" class = "xButtons"></input>
+                <input type="button" value="1.5" class = "xButtons"></input>
+                <input type="button" value="2" class = "xButtons"></input>
+                </div>
             </label>
             <div>
                 <label for="ySelection">
                     <p>Y</p>
-                    <input type="text" name="y" id="ySelection" required placeholder="-3...5">
+                    <input type="text" name="y" id="ySelection" required placeholder="-3...3">
                 </label>
             </div>
             <div class="thirdColumn">
                 <p>R</p>
-                <label for="r1"><input type="checkbox" value="1" id="r1" class="checkboxes" name="Radius">1</label>
-                <label for="r2"><input type="checkbox" value="2" id="r2" class="checkboxes" name="Radius">2</label>
-                <label for="r3"><input type="checkbox" value="3" id="r3" class="checkboxes" name="Radius">3</label>
-                <label for="r4"><input type="checkbox" value="4" id="r4" class="checkboxes" name="Radius">4</label>
-                <label for="r5"><input type="checkbox" value="5" id="r5" class="checkboxes" name="Radius">5</label>
+                <label for="r1"><input type="radio" value="1" id="r1" class="checkboxes" name="Radius">1</label>
+                <label for="r2"><input type="radio" value="2" id="r2" class="checkboxes" name="Radius">2</label>
+                <label for="r3"><input type="radio" value="3" id="r3" class="checkboxes" name="Radius">3</label>
+                <label for="r4"><input type="radio" value="4" id="r4" class="checkboxes" name="Radius">4</label>
+                <label for="r5"><input type="radio" value="5" id="r5" class="checkboxes" name="Radius">5</label>
             </div>
             <button type="button" onclick="submit()" >Отправить</button>
         </div>

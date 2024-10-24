@@ -20,7 +20,7 @@ public class AreaCheckServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            Dot dot = new Dot(Integer.parseInt(request.getParameter("x")), Double.parseDouble(request.getParameter("y")), Integer.parseInt(request.getParameter("r")));
+            Dot dot = new Dot(Double.parseDouble(request.getParameter("x")), Double.parseDouble(request.getParameter("y")), Double.parseDouble(request.getParameter("r")));
             dot.status(functionCalc.isInTheSpot(dot));
 
 

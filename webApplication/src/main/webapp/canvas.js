@@ -41,18 +41,7 @@ function drawCircle() {
     ctx.fillStyle = '#5f9ea0';
     ctx.beginPath();
     ctx.moveTo(0, 0);
-    ctx.arc(0, 0, R, Math.PI, 1.5 * Math.PI, false);
-    ctx.closePath();
-    ctx.fill();
-    ctx.strokeStyle = '#000000';
-    ctx.stroke();
-}
-
-function drawRectangle() {
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(R, 0);
-    ctx.lineTo(0, R / 2);
+    ctx.arc(0, 0, R/2, Math.PI, 1.5 * Math.PI, false);
     ctx.closePath();
     ctx.fill();
     ctx.strokeStyle = '#000000';
@@ -61,7 +50,18 @@ function drawRectangle() {
 
 function drawTriangle() {
     ctx.beginPath();
-    ctx.rect(0, -R, R / 2, R);
+    ctx.moveTo(0, 0);
+    ctx.lineTo(R/2, 0);
+    ctx.lineTo(0, -R);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = '#000000';
+    ctx.stroke();
+}
+
+function drawRectangle() {
+    ctx.beginPath();
+    ctx.rect(0, 0, -R, R/2);
     ctx.closePath();
     ctx.fill();
     ctx.strokeStyle = '#000000';
@@ -95,8 +95,8 @@ function writeText() {
 drawNet();
 drawCoordinateLines();
 ctx.translate(Xcanvas / 2, Ycanvas / 2);
-drawCircle()
+drawCircle();
+drawTriangle();
 drawRectangle();
-drawTriangle()
 ctx.resetTransform();
-writeText()
+writeText();

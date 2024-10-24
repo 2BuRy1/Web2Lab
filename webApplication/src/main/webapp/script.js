@@ -7,66 +7,66 @@ document.getElementById("ySelection").addEventListener("input", function (e) {
 });
 
 
-let checkboxes = document.querySelectorAll(".checkboxes");
+canvas.addEventListener('click', function (event) {
+    let rHTML = document.querySelector('input[type="radio"]:checked') // Получаем выбранное значение R
 
-checkboxes.forEach(function (checkbox) {
-    checkbox.addEventListener('change', function (event) {
-        checkboxes.forEach(function (cb) {
-            if (cb !== event.target) {
-                cb.checked = false;
-            }
-        });
+    if (!rHTML || !checkR(parseFloat(rHTML.value))) {
+        badMessage("Выбреите радиус!");
+        return;
+    }
+
+    const rValue = parseFloat(rHTML.value);  // Получаем значение радиуса R
+
+    const rect = canvas.getBoundingClientRect();
+    const xClick = event.clientX - rect.left;
+    const yClick = event.clientY - rect.top;
+
+    const xValue = (xClick - Xcanvas / 2) * rValue / 100;  // 100 — масштаб по X
+    const yValue = -(yClick - Ycanvas / 2) * rValue / 100; // 100 — масштаб по Y
+    if (checkValue(yValue) && checkX(xValue)) {
+        sendResponse(xValue.toFixed(5), yValue.toFixed(5), rValue);
+        drawDot(xValue, yValue, rValue);
+    } else {
+        badMessage("Данные невалидны!!")
+    }
+
+
+});
+
+let xHTML;
+
+document.querySelectorAll(".xButtons").forEach(element => {
+    element.addEventListener("click", function (e) {
+        xHTML = e.target.value;
     });
 });
 
 
 async function submit() {
 
-    let xHTML = document.getElementById("xSelection");
     let yHTML = document.getElementById("ySelection");
-    let rHTML = Array.from(checkboxes).find(i => i.checked);
+    let rHTML = document.querySelector('input[type="radio"]:checked')
 
-    if (isNaN(parseFloat(yHTML.value)) || !checkValue(parseFloat(yHTML.value)) || !rHTML || !checkR(parseFloat(rHTML.value)) || !checkX(parseFloat(xHTML.value))) {
+
+    if (isNaN(parseFloat(yHTML.value)) || !checkValue(parseFloat(yHTML.value)) || !rHTML || !checkR(parseFloat(rHTML.value)) || !checkX(parseFloat(xHTML))) {
+        badMessage("Данные невалидны!!")
         return;
     }
 
 
-    const xValue = parseInt(xHTML.value);
+    const xValue = parseFloat(xHTML);
     const rValue = parseInt(rHTML.value);
-
+    console.log(xValue)
 
     drawDot(xValue, yHTML.value, rValue);
-
-    //
-    // const requestContent = {
-    //     method: "post",
-    //     headers: {
-    //         "Accept": "application/json",
-    //         "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify({x: xValue, y: yHTML.value, r: rValue})
-    //
-    // };
-
-    const requestContent = {
-        method: "get",
-        headers: {
-            "Accept": "application/json",
-        },
-    }
-
-   const url = '/api';
-
-
-    fetch(`${url}?x=${xValue}&y=${yHTML.value}&r=${rValue}`, requestContent).then(response => response.json())
-        .then(data => appendData(data)).catch(err => console.error(err));
-  // fetch('/api', requestContent).then(response => response.json()).then(data => appendData(data)).catch(err => console.error(err));
+    console.log("smthing")
+    sendResponse(xValue, yHTML.value, rValue);
 }
 
 
 function checkValue(value) {
 
-    if (-3 > value || value > 5) {
+    if (-3 > value || value > 3) {
         return false;
     }
     return true;
@@ -87,13 +87,25 @@ function checkR(value) {
 
 function checkX(value) {
 
-    let array = [-3, -2, -1, 0, 1, 2, 3, 4]
-    for (let i = 0; i < array.length; i++) {
-        if (array[i] === value) {
-            return true;
-        }
+    return (value > -2 && value < 2);
+
+
+}
+
+function sendResponse(x, y, r) {
+
+    const requestContent = {
+        method: "get",
+        headers: {
+            "Accept": "application/json",
+        },
     }
-    return false;
+
+    const url = '/api';
+
+
+    fetch(`${url}?x=${x}&y=${y}&r=${r}`, requestContent).then(response => response.json())
+        .then(data => appendData(data)).catch(err => console.error(err));
 
 
 }
@@ -161,10 +173,17 @@ function drawDot(xValue, yValue, rValue) {
 
 }
 
-function badMessage() {
-    let RequestStatus = document.querySelector("status")
-    let statusText = document.createElement("h2");
-    RequestStatus.classList.add('visible');
-    RequestStatus.appendChild(statusText);
+function badMessage(message) {
+    let RequestStatus = document.querySelector("status");
 
+    // Очистим старое сообщение, если оно уже есть
+    RequestStatus.innerHTML = '';
+
+    if (!RequestStatus.querySelector("h2")) {
+        let statusText = document.createElement("h2");
+        statusText.textContent = message
+        RequestStatus.style.color = "red";
+        RequestStatus.classList.add('visible');
+        RequestStatus.appendChild(statusText);
+    }
 }
